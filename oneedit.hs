@@ -11,3 +11,10 @@ edits1 word = unique $ deletes ++ transposes ++ replaces ++ inserts
 deletes = [a ++ (tail b) |
   (a, b) <- splits, (not.null) b]
 
+transposes = [a ++ [b!!1] ++ [head b] ++ (drop 2 b) |
+  (a, b) <- splits, length b > 1]
+
+replaces = [a ++ [c] ++ (drop 1 b)
+  | (a, b) <- splits
+  , c <- alphabet
+  , (not.null) b ]
