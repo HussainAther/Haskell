@@ -18,3 +18,13 @@ replaces = [a ++ [c] ++ (drop 1 b)
   | (a, b) <- splits
   , c <- alphabet
   , (not.null) b ]
+
+inserts = [a ++ [c] ++ b
+  | (a, b) <- splits 
+  ,c <- alphabet ]
+
+alphabet = ['a'..'z']
+word' = maptoLower word
+unique :: [String] -> [String]
+unique = map head.group.sort
+main = print $ edits1 "hi"
