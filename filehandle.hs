@@ -11,3 +11,10 @@ dumpFile handle filename lineNumber = do
         dumpeFile handle filename $ lineNumber + 1
 
 main :: IO ()
+
+main = do
+    hPutStr stderr "Type a filename: "
+    filename <- getLine
+    handle <- openFile filename ReadMode
+    dumpFile handle filename 1
+    hClose handle
