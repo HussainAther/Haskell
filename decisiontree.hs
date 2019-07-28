@@ -82,4 +82,8 @@ dtree f d
     M.foldWithKey (\k a b -> b ++ [dtree k a]) []
     (datatrees d)
 
-
+DTree { feature = "root", children = [DTree {feature = 
+        "Sunny", children = [Node "Normal"
+        "Yes", Node "High" "No"], DTree 
+        {feature ="Rain", children = [Node "Weak" "Yes", Node "Strong"
+        "No"}}, Node "Overcast" "Yes"]}
