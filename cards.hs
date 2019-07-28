@@ -38,3 +38,9 @@ deck = [(r, s) | r <- ranks, s <- suits]
 selectOne :: (Fractional prob, EQ a) => 
   StateT ([a]) (Dist.T prob) a
 selectOne = StateT $ Dist.uniform . removeEach
+
+select :: (Fractional prob, Eq a) => Int -> [a] -> Dist.T prob [a]
+select n = evalStateT (replicateM n selectOne)
+
+removeEach xs = zip xs (map (flip delete xs) xs)
+main = print $
