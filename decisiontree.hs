@@ -38,3 +38,20 @@ splitAttr fc = foldl (\m (f,c) -> M.insertWith (++) f[c]m)
 
 splitEntropy :: Map Feature [Class] -> M.Map Feature Entropy
 splitEntropy m = M.map entropy m 
+
+informationGain :: [Class] -> [(Feature, Class)] -> Double
+informationGain s a = entropy s - newInformation
+  where eMap = splitEntropy $ splitAttr a
+    m = splitAttr a
+    toDouble x = read x :: Double
+    ratio x y = (fromIntegral x) / (fromIntegral y)
+    sumE = M.map (\x -> (fromIntegral.length) x / (fromIntegral.length) s) m
+      newInformation = M.foldWithKey (\k a b -> b + a*(eMap!k))
+    o sumE
+
+highestInformationGain :: DataSet -> Int
+highestInformationGain d = snd $ maximum $
+  zip (map ((informationGAin.classes) d) attrs) [o..]
+  where attrs = map (attr d) [o..s-1]
+    attr d n = map (\xs,x) -> (xs!!n, x)) d
+    s = (length.fst.head) d
