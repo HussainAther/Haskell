@@ -23,3 +23,14 @@ relocate centroidsMap =
     center [] = [0, 0]
     center ps = map average (transpose ps)
     average xs = sum xs / fromIntegral (length xs) 
+
+kmeans :: [Point] -> [Point] -> [Point]
+kmeans centroids points = 
+if converged
+then centroids
+else kmeans (Map.keys newCentroidsMap) points
+where convegrged = 
+  all (< .00001) $ zipWith dist
+   (sort centroids) (Map.keys newCentroidsMap)
+  newCentroidsMap = relocate (assign centroids points)
+  equal a b = dist a b < .00001
