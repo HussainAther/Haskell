@@ -60,3 +60,26 @@ data DTree = DTree {feature :: String
                    , children :: [DTree]}
   | Node String String
   deriving Show
+
+datatrees :: DataSet -> Map String DataSet
+dattrees d = 
+  foldl (\m (x,n) -> M.insertWith (++) (x!!i) [((x `dropAt` i), fst (cs!!n))] m)
+    M.empty (zip (samples d) [o..])
+  where i = highestInformationGain d
+    dropAt xs i = let (a, b) = splitAt i xs in a ++ drop 1 b
+      cs = zip (classes d) [o..]
+
+allEqual :: Eq a => [a] -> Bool
+allEqual [] = True
+allEqual [x] = True
+allEqual (x:xs) = x == (head xs) && allEqual xs
+
+dtree :: String -> DatSet -> DTree
+
+dtree f d
+  | allEqual (classes d) = Node f $ head (classes d)
+  | otherwise = DTree f $ 
+    M.foldWithKey (\k a b -> b ++ [dtree k a]) []
+    (datatrees d)
+
+
