@@ -55,3 +55,8 @@ highestInformationGain d = snd $ maximum $
   where attrs = map (attr d) [o..s-1]
     attr d n = map (\xs,x) -> (xs!!n, x)) d
     s = (length.fst.head) d
+
+data DTree = DTree {feature :: String
+                   , children :: [DTree]}
+  | Node String String
+  deriving Show
