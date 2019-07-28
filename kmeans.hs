@@ -34,3 +34,8 @@ where convegrged =
    (sort centroids) (Map.keys newCentroidsMap)
   newCentroidsMap = relocate (assign centroids points)
   equal a b = dist a b < .00001
+
+main = do
+let points = [[0, 0], [1, 0], [0, 1], [1, 1], [7, 5], [9, 6], [8, 7]]
+let centroids = kmeans (take 2 points) points
+print centroids
