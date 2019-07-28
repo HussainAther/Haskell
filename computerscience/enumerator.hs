@@ -1,0 +1,2 @@
+--Loop through chunks of a file and accumulate lines. The enumerator feeds data to an
+--iteratee to get a result.
