@@ -11,5 +11,6 @@ enumerateFile path initIter =
         else do
           chunk <- B.hGet h 8
           check $
-      runIter iter chunk check (NeedChunk iterNext)
-
+      runIter iter chunk check (NeedChunk iterNext) = 
+              iterNext check (HaveLine residual) = do putStrLn line check $ runIter initIter in go initIter
+      
