@@ -10,3 +10,8 @@ type Class = String
 type Feature = String
 type Entropy = Double
 type DataSet = [([String], Class)]
+
+main = do
+  rawCSV <- parseCSVFromFile "input.csv"
+  either handleError doWork rawCSV
+handleError = error "invalid file"
