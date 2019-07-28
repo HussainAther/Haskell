@@ -5,3 +5,8 @@ import Data.List (transpose)
 import Text.CSV
 
 --Decision tree.
+
+type Class = String
+type Feature = String
+type Entropy = Double
+type DataSet = [([String], Class)]
