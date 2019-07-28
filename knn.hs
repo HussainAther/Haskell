@@ -25,3 +25,20 @@ maxFreq xs = fst $ foldl myCompare ("", 0) freqs
     myCompare (oldS, oldV) (s, v) = if v > oldV 
       then (s, v)
       else (oldS, oldV)
+
+test :: KdTree Point3d -> Int -> [(Point3d, String)] -> Point3d -> String
+test kdtree k pairList p = maxFreq $ map classify neighbors
+  where neighbors = kNearestNeighbors kdtree k p 
+    classify x = fromJust (lookup x pairList)
+
+main = do
+  rawCSV <- parseCSVFromFile "input.csv"
+  either handleError doWork rawCSV
+
+handleError = error "Invalid CSV file"
+doWork rawCSV = do
+  let ps = parse rawCSV
+  let kdtree = fromList (map fst ps)
+  let examples = [["71.190.100.100", "2000", "?"], ["216.239.33.1", "1", "?"]]
+  let examplePts  map fst $ parse examples
+  print $ map (test kdtree 2 ps) examplePts 
