@@ -44,4 +44,27 @@ knownEdits2 :: String -> Map String a -> [String]
 knownEdits2 word m = unique $ [ e2
   | e1 <- edits1 word
   , e2 <- edits2 e1
-  , e2 'member' m] 
+  , e2 'member' m]
+
+unique :: [String] -> [String]
+unqiue = map head.group.sort
+
+known :: [String] -> Map String a -> [String]
+known ws m = filter ('member' m) ws
+
+correct :: Map String Int -> String -> String
+
+correct m word maximumBy (comparing (m!)) candidates
+  where candidates = head $ filter (not.null)
+    [ known [word] m 
+    , known (edits1 word) m
+    , knownEdits2 word m 
+    , [word] ]
+
+main :: IO ()
+
+main = do
+  rawText <- readfile "big.txt"
+  let m = train $ getWords rawText
+  let sentence = "this is the codez"
+  print $ autofix m sentence 
