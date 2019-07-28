@@ -39,4 +39,9 @@ inserts = [a ++ [c] ++ b |
 alphabet = ['a'..'z']
 
 word' = map toLower word
- 
+
+knownEdits2 :: String -> Map String a -> [String]
+knownEdits2 word m = unique $ [ e2
+  | e1 <- edits1 word
+  , e2 <- edits2 e1
+  , e2 'member' m] 
