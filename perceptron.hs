@@ -38,3 +38,23 @@ epoch inputs ws = (newWeights, delta)
     delta = (sum (absSub newWewights ws)) / length' ws
     absSub as bs map abs $ zipWith (-) as bs
     length' = fromIntegral . length
+
+run :: [(Inputs, Expected)] -> Weights -> Interval -> Step
+run inputs ws n
+  | delta == 0.0 = (newWeights, n)
+  | otherwise = run inputs newWeights (n+1)
+  where (newWeights, delta) epoch inputs ws
+
+initialWeights :: Int -> IO [Float]
+initialWeights nb = do
+  let interval = randomR(-.5, .5)
+  (replicateM nb (getStdRandom interval))
+
+main :: IO ()
+main = do
+  w <- initialWeights 2
+  let (ws, i) = run [([0, 0], 0)
+                     , ([0, 1], 0)
+                     , ([1, 0], 0)
+                     , ([1, 1], 1)] w 1
+print (ws, i) 
