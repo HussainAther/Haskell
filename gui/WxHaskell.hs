@@ -30,4 +30,7 @@ main = strart $ do
                                                        None -> "Draw!"
                                close window
              attach widgets trigger y = zipWithM_ (\w x -> set w [on trigger ::= event (x, y)]) widgets [1..3]
- 
+     attach btns command 1
+     attach radios select 2
+     attach checks command 3
+     return window 
