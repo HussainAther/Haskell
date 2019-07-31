@@ -25,3 +25,7 @@ main = do
        button <- radioButtonNewWithLabel "" -- radioButtonNew doesn't line up with radioButtonWithLabel
        button `on` toggled $ set button [widgetSensitive := False]
        button_ <- radioButtonNewWithLabel "?"
+       set button_ [radioButtonGroup := button]
+       mapM_ (boxPackStartDefaults group) [button, button_]
+     checks <- replicateM 3 checkButtonNew
+     --attach event handlers
