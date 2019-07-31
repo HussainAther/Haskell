@@ -99,3 +99,13 @@ main = do
                                                X -> "X won!"
                                                O -> "O won!"
                                                None -> "Draw!"
+                             qshow box ()
+   --widgetCreator will return a widget with an event attached
+   --widgets creates 3 of them in a row
+   widgets (widgetCreator::WidgetCreator) y = forM_ [1..3] $\x -> do
+                                  w <- widgetCreator $ event (x, y)
+                                  addWidget grid (w, y-1, x-1)
+
+zipWithM_ widgets [button, radioGroup, check] [1..3]
+qshow window ()
+qApplicationExec ()
