@@ -53,3 +53,31 @@ newGame = Game X newBoard
 
 -- |Puts the player's token on the specified square.
 -- Returns "Just" "Token" if the game has been won, "Just" "None" for a draw.
+otherwise "Nothing".
+move :: Game -> Square -> (Game, Maybe Token)
+move (Game player board) square = 
+  let board' = setSquare board square player
+    player' = case player of {X -> O; O -> X}
+  in (Game player' board', endGame board')
+
+-- Show instances
+
+outersperse :: a -> [a] -> [a]
+outersperse x ys = x : intersperse x ys ++ [x]
+
+instance Show Token where
+  show X = "X"
+  show O = "O"
+  show None = " "
+  showList tokens = showString $ outersperse '|' $ concatMap show tokens
+
+-- Board cannot be declared an instance of Show, as this would overlap with the existing instance for Array
+showBoard :: Board -> String
+showBoard board = 
+  let border = " +-+-+"
+    i = [1..3]
+    showRow x = show x ++ show [board ! (y, x0 | y <- i]
+  in intercalate "\n" $ "  1 2 3" : outersperse border (map showRow i)
+
+instance Show Game where
+  show (Game player board) = showBoard board ++ "\n\nTurn: " ++ show player
