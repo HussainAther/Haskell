@@ -36,3 +36,20 @@ endGame board
       in [[(x,y) | y <- i] | x <- i] ++ -- rows 
          [[(y,x) | y <- i] | x <- i] ++ -- coloumns 
          [[(x,x) | x <- i], [(x,4-x) | x <- i]] -- diagonals
+    rows2tokens :: [[Token]] 
+    rows2tokens = map (map (board !)) rows
+    isWin :: [Token] -> Maybe Token 
+    isWin tokens 
+      | all (==X) tokens = Just X 
+      | all (==O) tokens = Just O 
+      | otherwise = Nothing
+    maybeWins :: [Maybe Token]i
+    maybeWins = map isWin rows2tokens
+
+-- |The state of a game, i.e. the player who's turn it is, and the current board. data Game = Game Token Board
+
+newGame :: Game
+newGame = Game X newBoard
+
+-- |Puts the player's token on the specified square.
+-- Returns "Just" "Token" if the game has been won, "Just" "None" for a draw.
