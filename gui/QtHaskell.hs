@@ -49,4 +49,22 @@ oxRadioButton e = do
    layout <- qVBoxLayout ()
    setLayout group layout
    button <- oxRadioButton ""
- 
+   setChecked button True
+   connectSlot button "clicked()" button "click()" $ \button -> setEnabled (button::OxRadioButton) False 
+   button_ <- oxRadioButton "?"
+   connectSlot button_ "clicked()" button_ "click()" e
+   mapM_ (addWidget layout) [button, button_]
+   qCast_QWidget group
+
+-- |Create a check box.
+data COxQCheckBox
+type OxCheckBox = QCheckBoxSC COxQCheckBox
+
+oxCheckBox :: IO OxCheckBox
+oxCheckBox = qSubClass $ qCheckBox " "
+
+check :: WidgetCreator
+check e = do
+    check <- oxCheckBox
+    connectSlot check "clicked()" check "click()" e
+    qCast_QWidget check 
