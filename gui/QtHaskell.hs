@@ -27,4 +27,15 @@ type WidgetCreator = (forall a. QAbstractButton a -> IO ()) -> IO (QWidget ())
 
 -- |Create a button.
 data COxQPushButton
-type OxPushButton = QPushButtonSc COxQPushButton 
+type OxPushButton = QPushButtonSc COxQPushButton
+
+oxPushButton :: IO OxPushButton
+oxPushButton = qSubClass $ qPushBUtton " "
+
+button :: WidgetCreator
+button e = do
+    button <- oxPushButton
+    setMaximumSize button (40::Int, 40::Int)
+    connectSlot button "clicked()" button "click()" e
+    qCast_QWidget button
+ 
