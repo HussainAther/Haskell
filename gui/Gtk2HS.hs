@@ -20,3 +20,8 @@ main = do
      table <- tableNew 3 3 True
      boxPackEndDefaults vbox table
      btns <- replicateM 3 toggleButtonNew
+     radios <- replicateM 3 $ do
+       group <- vBoxNew False 0
+       button <- radioButtonNewWithLabel "" -- radioButtonNew doesn't line up with radioButtonWithLabel
+       button `on` toggled $ set button [widgetSensitive := False]
+       button_ <- radioButtonNewWithLabel "?"
