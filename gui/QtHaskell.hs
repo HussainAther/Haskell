@@ -78,4 +78,24 @@ main = do
    window <- qDialog ()
    setWindowTitle window "OX"
    vbox <- qVBoxLayout ()
-   setLayout window vbox 
+   setLayout window vbox
+   grid <- qGridLayout ()
+   addLayout vbox grid
+   label <- qLabel "Move: X"
+   addWidget vbox label
+   --attach event handlers
+   let event square button = do
+           g@(Game player _) <- readIORef game
+           setText button $ show player
+           let (g'@(Game player _), result) = move g square 
+           case result of
+               Nothing -> do --continue game
+                          writeIORef game g'
+                          setEnabled button False
+                          setText label $ "Move: " ++ show player
+               Just token -> do --end game
+                             box <- qMessageBox window
+                             setText box $ case token of
+                                               X -> "X won!"
+                                               O -> "O won!"
+                                               None -> "Draw!"
