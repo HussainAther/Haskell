@@ -67,4 +67,15 @@ check :: WidgetCreator
 check e = do
     check <- oxCheckBox
     connectSlot check "clicked()" check "click()" e
-    qCast_QWidget check 
+    qCast_QWidget check
+
+main = do
+   --create a new game
+   game <- newIORef newGame
+   
+   --create the main window
+   qApplication ()
+   window <- qDialog ()
+   setWindowTitle window "OX"
+   vbox <- qVBoxLayout ()
+   setLayout window vbox 
