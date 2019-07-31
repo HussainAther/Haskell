@@ -1,0 +1,1 @@
+{-# LANGUAGE RankNTypes, ScopedTypeVariables, EmptyDataDecls #-}
