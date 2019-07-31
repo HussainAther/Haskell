@@ -24,3 +24,7 @@ import Qtc.Gui.QGridLayout
 import OX
 
 type WidgetCreator = (forall a. QAbstractButton a -> IO ()) -> IO (QWidget ())
+
+-- |Create a button.
+data COxQPushButton
+type OxPushButton = QPushButtonSc COxQPushButton 
