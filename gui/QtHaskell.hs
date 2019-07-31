@@ -38,4 +38,15 @@ button e = do
     setMaximumSize button (40::Int, 40::Int)
     connectSlot button "clicked()" button "click()" e
     qCast_QWidget button
+
+-- |Create a radio button group.
+data COxQRadioButton
+type OxRadioButton = QRadioButtonSc COxQRadioButton
+
+oxRadioButton :: String -> IO OxRadioButton
+oxRadioButton e = do
+   group <- qGroupBox ()
+   layout <- qVBoxLayout ()
+   setLayout group layout
+   button <- oxRadioButton ""
  
