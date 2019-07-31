@@ -22,3 +22,5 @@ import Qtc.Gui.QBoxLayout ()
 import Qtc.Gui.QGridLayout 
 
 import OX
+
+type WidgetCreator = (forall a. QAbstractButton a -> IO ()) -> IO (QWidget ())
