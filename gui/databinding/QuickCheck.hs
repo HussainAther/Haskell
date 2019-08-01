@@ -60,3 +60,16 @@ prop_insert' xs i x = let pos = anywhere i xs
                       && take pos actual == take pos xs 
                       && actual !! pos == x 
                       && drop pos actual == drop (pos+1) xs -- *** QuickCheck 'Property's for Monadic actions. ***
+
+prop_Source :: (A,A,A) -> Property 
+prop_Source (a,b,c) = monadicIO $ do 
+   (x, y) <- run $ do --bind a 
+                  source source <- newVar a :: IO (Source V A) 
+                  target <- newVar c :: IO (Source V A) 
+                  bind source id target writeVar 
+                  x <- readVar target 
+                  --change its value 
+                  writeVar source b 
+                  y <- readVar target 
+                  return (x,y) 
+   assert (x==a && y==b)
