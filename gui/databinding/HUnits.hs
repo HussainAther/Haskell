@@ -17,5 +17,7 @@ type A = Int
 
 -- | Generate a list for testing.
 -- Many operations are expected to fail on lists of fewer than 2 elements.
-list' :: IO ([A], Int)
- 
+list' :: IO ([A], Int) 
+lis' = do size <- randomRIO (2, 100)
+          list <- replaceM size randomIO
+          return (list, size) 
