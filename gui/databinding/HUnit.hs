@@ -131,4 +131,20 @@ testInsert = do (list, size, bl) <- list
                  seek bl pos 
                  let pos' = pos+1 
                  insert bl new >>= assertPos pos' bl 
-                 assertList (insert' list pos' new) b
+                 assertList (insert' list pos' new) bl
+
+main = do Counts _ _ e f <- runTestTT $ TestList 
+             ["Source" ~: testSource 
+             ,"binding lists" ~: testList 
+             ,"length" ~: testLength 
+             ,"seek" ~: testSeek 
+             ,"seekBy" ~: testSeekBy 
+             ,"next" ~: testNext 
+             ,"prev" ~: testPrev 
+             ,"remove'" ~: testRemove' 
+             ,"remove" ~: testRemove 
+             ,"remove' last" ~: testRemoveLast' 
+             ,"remove last" ~: testRemoveLast 
+             ,"insert'" ~: testInsert' 
+             ,"insert" ~: testInsert] 
+          when (e>0 || f>0) exitFailure
