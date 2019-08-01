@@ -28,4 +28,10 @@ testRemove' = do (list, size) <- list'
                   let actual = remove' list pos
                   assertEqual "List hasn't shrunk correctly" (size-1) (P.length actual) 
                   assertEqual "Head of list incorrect" (take pos list) (take pos actual) 
-                  assertEqual "Tail of list incorrect" (drop (pos+1) list) (drop pos actual) 
+                  assertEqual "Tail of list incorrect" (drop (pos+1) list) (drop pos actual)
+
+testRemoveLast' :: Assertion
+testRemoveLast' = do (list, size) <- list'
+                     let actual = remove' list (size-1)
+                     assertEqual "List hasn't shrunk correctly" (size-1) (P.length actual) 
+                     assertEqual "List is incorrect" (take (size-1) list) actual 
