@@ -59,3 +59,17 @@ testSource = do --bind a source
                 writeVar source expected 
                 actual <- readVar target 
                 assertEqual "Value Changed" expected actual
+
+-- | Generate a 'BindingList' for testing. 
+list :: IO ([A], Int, BindingList V A) 
+list = do (list, size) <- list' liftM (list, size,) (toBindingList list) 
+
+-- | Assert that a 'BindingList' holds the expected list. 
+assertList :: [A] -> BindingList V A -> Assertion 
+assertList list bl = fromBindingList bl >>= (list @=?) 
+
+-- | Assert that a 'BindingList' holds the expected list. 
+assertPos :: Int -> BindingList V A -> Int -> Assertion 
+assertPos expected bl reported = do pos <- position bl 
+                                    assertEqual "Wrong positon" expected pos 
+                                    assertEqual "Wrong positon reported" pos reported
