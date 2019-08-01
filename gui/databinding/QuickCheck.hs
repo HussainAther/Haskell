@@ -94,3 +94,18 @@ prop_position :: NonEmptyList A -> Int -> Property
 prop_position (NonEmpty xs) i = let pos = anywhere i xs in monadicIO $ do 
    new <- run $ list xs pos >>= position 
    assert (new == pos)
+
+prop_seekBy :: List -> Int -> Int -> Property 
+prop_seekBy (List xs) a b = let size = P.length xs 
+                                init = anywhere a xs 
+                                offset = anywhere b xs - init 
+                            in monadicIO $ do 
+    (new, x) <- run $ do bl <- list xs init 
+                         liftM2 (,) (seekBy (offset+) bl) (readVar bl) 
+    assert (new == init + offset && x == xs !! new) 
+
+prop_next :: List -> Int -> Property 
+prop_next (List xs) i = let pos = notLast i xs in monadicIO $ do 
+    (new, x) <- run $ do bl <- list xs pos 
+                         liftM2 (,) (B.next bl) (readVar bl) 
+    assert (new == pos + 1 && x == xs !! new)
