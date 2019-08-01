@@ -74,3 +74,18 @@ seekBy f bindingList = do pos <- readVar (pos bindingList)
 -- | Bind to the next item in a binding list. 
 next :: Variable v => BindingList v a -> IO Int 
 next = seekBy succ
+
+-- | Bind to the previous item in a binding list. 
+prev :: Variable v => BindingList v a -> IO Int 
+prev = seekBy pred 
+
+-- | Remove an element from a list. 
+remove' :: [a] -> Int -> [a] 
+remove' list pos = let (xs, _:ys) = splitAt pos list in xs ++ ys 
+
+-- | Remove the current element from the list. 
+remove :: Variable v => BindingList v a -> IO Int 
+remove b@(BindingList _ list pos) = do list' <- readVar list 
+                             pos' <- readVar pos 
+                             writeVar list $ remove' list' pos' 
+                             seek' b (if pos' == P.length list' - 1 then pos' - 1 else pos')
