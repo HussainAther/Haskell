@@ -32,3 +32,9 @@ anywhere i xs = let max = P.length xs - 1
 -- | Anywhere in the list except the last element. 
 notLast :: Int -> [A] -> Int 
 notLast i = anywhere i . tail
+
+-- | Create a 'BindingList', and 'seek' to @pos@. 
+list :: [A] -> Int -> IO (BindingList V A) 
+list xs pos = do bl <- toBindingList xs 
+                 seek bl pos 
+                 return bl
