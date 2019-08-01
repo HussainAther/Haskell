@@ -38,3 +38,17 @@ list :: [A] -> Int -> IO (BindingList V A)
 list xs pos = do bl <- toBindingList xs 
                  seek bl pos 
                  return bl
+
+-- *** Test pure functions *** 
+prop_remove' :: [A] -> Int -> Bool 
+prop_remove' xs i = let pos = anywhere i xs 
+                        actual = remove' xs pos 
+                    in P.length actual == P.length xs - 1 
+                    && take pos actual == take pos xs              
+                    && drop (pos+1) xs == drop pos actual 
+
+prop_removeLast' :: [A] -> Bool 
+prop_removeLast' xs = let pos = P.length xs - 1 
+                          actual = remove' xs pos 
+                      in P.length actual == pos 
+                      && actual == take pos xs
