@@ -36,3 +36,14 @@ main = start $ do
          zipWithM_ (\b e -> sink b [text :== e, enabled :== null <#> e])
                    (map objectCast btns ++ map objectCast radios ++ map objectCast checks :: [Control ()])
                    tokens
+         sink label [text :== ("Move: " ++) <$> player]
+         --end game event handler
+         reactimate $ (end window . fromJust) <$> filterE isJust (changes $ snd <$> state) 
+     actuate network
+end :: Frame () -> Token -> IO ()
+end window result = do
+    infoDialog window "" $ case result of
+                              X -> "X won!"
+                              O -> "O won!"
+                              None -> "Draw!"
+     close window
