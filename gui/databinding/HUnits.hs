@@ -44,3 +44,18 @@ testInsert' = do (list, size) <- list'
                   assertEqual "Head of list incorrect" (take pos list) (take pos actual)
                   assertEqual "element not inserted" new (actual !! pos) 
                   assertEqual "Tail of list incorrect" (drop pos list) (drop (pos+1) actual)
+
+--- *** Test monadic functions ***
+testSource :: Assertion
+testSource = do --bind a source
+                expected <- randomIO 
+                source <- newVar expected :: IO (Source V A) 
+                target <- randomIO >>= newVar :: IO (Source V A) 
+                bind source id target writeVar 
+                actual <- readVar target 
+                assertEqual "Initial Bind" expected actual 
+                --change its value 
+                expected <- randomIO 
+                writeVar source expected 
+                actual <- readVar target 
+                assertEqual "Value Changed" expected actual
