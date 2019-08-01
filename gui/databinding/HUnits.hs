@@ -11,4 +11,11 @@ import Prelude as P
 
 -- Change these to exercise different variable and data types
 type V = IORef
-type A = Int 
+type A = Int
+
+-- *** Test pure helpers ***
+
+-- | Generate a list for testing.
+-- Many operations are expected to fail on lists of fewer than 2 elements.
+list' :: IO ([A], Int)
+ 
