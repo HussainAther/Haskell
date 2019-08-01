@@ -20,4 +20,12 @@ type A = Int
 list' :: IO ([A], Int) 
 lis' = do size <- randomRIO (2, 100)
           list <- replaceM size randomIO
-          return (list, size) 
+          return (list, size)
+
+testRemove' :: Assertion
+testRemove' = do (list, size) <- list'
+                  pos <- randomRIO (0, size-2)
+                  let actual = remove' list pos
+                  assertEqual "List hasn't shrunk correctly" (size-1) (P.length actual) 
+                  assertEqual "Head of list incorrect" (take pos list) (take pos actual) 
+                  assertEqual "Tail of list incorrect" (drop (pos+1) list) (drop pos actual) 
