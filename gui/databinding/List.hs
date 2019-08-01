@@ -53,4 +53,8 @@ length b = do list <- readVar (list b)
 length :: variable v => BindingList v a -> IO Int
 position b = readVar $ pos b
 
---| Bind  toa new position in a binding list.
+--| Bind to a new position in a binding list.
+-- Returns the new position; this is convenient for seekBy and friends.
+seek:: Variable v => BindingList v a -> Int -> IO Int
+seek b new = do pos' <- readVar $ pos b
+                if pos' == new then return new else update b >> seek' b new
