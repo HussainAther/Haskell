@@ -89,3 +89,20 @@ remove b@(BindingList _ list pos) = do list' <- readVar list
                              pos' <- readVar pos 
                              writeVar list $ remove' list' pos' 
                              seek' b (if pos' == P.length list' - 1 then pos' - 1 else pos')
+
+-- | Insert an element into a list. 
+insert' :: [a] -> Int -> a -> [a] 
+insert' list pos x = let (xs, ys) = splitAt pos list 
+                     in xs ++ [x] ++ ys 
+
+-- | Insert an element into the list. 
+-- The new element is inserted after the current element. 
+-- This allows appending, but precludes prepending. 
+insert :: Variable v => BindingList v a -> a -> IO Int 
+insert b@(BindingList _ list pos) x = do update b 
+                                         list' <- readVar list 
+                                         pos' <- readVar pos 
+                                         x' <- newVar x 
+                                         let pos'' = pos' + 1 
+                                         writeVar list $ insert' list' pos'' x' 
+                                         seek' b pos''
