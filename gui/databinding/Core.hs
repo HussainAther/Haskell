@@ -44,3 +44,13 @@ class Variable b => Bindable b where
          -> t -- ^ the binding target
          -> (t -> d -> io ()) -- ^ a function that applies data to the target
          -> (IO ()
+
+instance Variable v => Bindable (Source v) where
+   bind (Source bindings var) extract target apply = 
+      do let binding = Binding extract target apply
+         --update the new binding
+         a <- readVar var
+         update' a binding
+         --add the new binding to the list
+         modifyVar bindings (binding:)
+
