@@ -58,3 +58,10 @@ position b = readVar $ pos b
 seek:: Variable v => BindingList v a -> Int -> IO Int
 seek b new = do pos' <- readVar $ pos b
                 if pos' == new then return new else update b >> seek' b new
+
+-- | Uncondition seek. Called after elements have changed position.
+seek' :: BindingList v a -> Int -> IO Int
+seek' (BindingList source list pos) new = do list' <- readVar list
+                                             readVar (list' !! new) >>= writeVar source
+                                             writeVar pos new
+                                             return new
