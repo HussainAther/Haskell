@@ -26,3 +26,11 @@ update :: BindingList v a -> IO ()
 update (BindingList source list pos) = do list' <- readVar list
                                           pos' <- readVar pos
                                           readVar source >>= writeVar (list' !! pos')
+
+-- | Extract the data from a binding list.
+fromBindingList :: Varible v => BindingLIst v a -> IO [a]
+fromBindingList b = do update b 
+                       readVar (list b) >>= mapM readVar
+ 
+-- | interface to the binding list's 'Source'
+instance Variable v => Variable (BindingList v) where
