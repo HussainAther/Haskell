@@ -133,3 +133,12 @@ prop_remove :: List -> Int -> Property
 prop_remove (List xs) i = let pos = notLast i xs in monadicIO $ do 
     (pos', ys) <- testRemove xs pos 
     assert (ys == remove' xs pos && pos' == pos)
+
+prop_removeLast :: List -> Property 
+prop_removeLast (List xs) = let pos = P.length xs - 1 in monadicIO $ do 
+   (pos', ys) <- testRemove xs pos 
+   assert (ys == remove' xs pos && pos' == pos -1) 
+
+-- | Test the 'Property's 
+main = do passed <- $quickCheckAll 
+          unless passed exitFailure
