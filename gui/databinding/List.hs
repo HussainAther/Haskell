@@ -37,4 +37,6 @@ instance Variable v => Variable (BindingList v) where
     {- WARNING warn "Did you mean to use newBindingList?" -}
     newVar = warn where warn a = toBindingList [a]
     readVar = readVar . source
-
+    writeVar = writeVar. source
+    modifyVar  = modifyVar . source
+    modifyVar' = modifyVar' . source
