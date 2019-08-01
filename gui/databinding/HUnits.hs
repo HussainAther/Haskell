@@ -88,3 +88,13 @@ testSeek = do (list, size, bl) <- list
               seek bl pos >>= assertPos pos bl 
               actual <- readVar bl 
               list !! pos @=? actual
+
+testSeekBy :: Assertion 
+testSeekBy = do (_, size, bl) <- list 
+                 init <- randomRIO (0, size-1) 
+                 offset <- randomRIO (-init, size-init-1) 
+                 let expected = init + offset 
+                 seek bl init actual <- seekBy (offset+) bl 
+                 --give a more detailed error message than assertPos 
+                 assertEqual ("Seek from " ++ show init ++ " by " ++ show offset) expected actual 
+                 assertPos expected bl actual
