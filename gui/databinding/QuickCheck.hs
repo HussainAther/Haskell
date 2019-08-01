@@ -52,3 +52,11 @@ prop_removeLast' xs = let pos = P.length xs - 1
                           actual = remove' xs pos 
                       in P.length actual == pos 
                       && actual == take pos xs
+
+prop_insert' :: [A] -> Int -> A -> Bool 
+prop_insert' xs i x = let pos = anywhere i xs 
+                          actual = insert' xs pos x 
+                      in P.length actual == P.length xs + 1 
+                      && take pos actual == take pos xs 
+                      && actual !! pos == x 
+                      && drop pos actual == drop (pos+1) xs -- *** QuickCheck 'Property's for Monadic actions. ***
