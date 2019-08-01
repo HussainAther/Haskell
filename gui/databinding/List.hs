@@ -34,3 +34,7 @@ fromBindingList b = do update b
  
 -- | interface to the binding list's 'Source'
 instance Variable v => Variable (BindingList v) where
+    {- WARNING warn "Did you mean to use newBindingList?" -}
+    newVar = warn where warn a = toBindingList [a]
+    readVar = readVar . source
+
