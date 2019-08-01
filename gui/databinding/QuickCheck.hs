@@ -73,3 +73,24 @@ prop_Source (a,b,c) = monadicIO $ do
                   y <- readVar target 
                   return (x,y) 
    assert (x==a && y==b)
+
+prop_List :: NonEmptyList A -> Property 
+prop_List (NonEmpty xs) = monadicIO $ do 
+   ys <- run $ (toBindingList xs :: IO (BindingList V A)) >>= fromBindingList 
+   assert (ys == xs) 
+
+prop_length :: NonEmptyList A -> Property 
+prop_length (NonEmpty xs) = monadicIO $ do 
+   l <- run $ (toBindingList xs :: IO (BindingList V A)) >>= B.length 
+   assert (l == P.length xs) 
+
+prop_seek :: NonEmptyList A -> Int -> Property 
+prop_seek (NonEmpty xs) i = let pos = anywhere i xs in monadicIO $ do 
+   (new, x) <- run $ do bl <- toBindingList xs :: IO (BindingList V A) 
+                        liftM2 (,) (seek bl pos) (readVar bl) 
+   assert (new == pos && x == xs !! pos) 
+
+prop_position :: NonEmptyList A -> Int -> Property 
+prop_position (NonEmpty xs) i = let pos = anywhere i xs in monadicIO $ do 
+   new <- run $ list xs pos >>= position 
+   assert (new == pos)
