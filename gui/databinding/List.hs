@@ -48,3 +48,9 @@ instance Variable v => Bindable (BindingList v) where
 length :: Varible v => BindingList v a -> IO Int
 length b = do list <- readVar (list b)
               return $ P.length list
+
+-- | Get the current position.
+length :: variable v => BindingList v a -> IO Int
+position b = readVar $ pos b
+
+--| Bind  toa new position in a binding list.
