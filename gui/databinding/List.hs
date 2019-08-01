@@ -40,3 +40,11 @@ instance Variable v => Variable (BindingList v) where
     writeVar = writeVar. source
     modifyVar  = modifyVar . source
     modifyVar' = modifyVar' . source
+
+instance Variable v => Bindable (BindingList v) where
+   bind = bind . source
+
+-- | The size of a binding list.
+length :: Varible v => BindingList v a -> IO Int
+length b = do list <- readVar (list b)
+              return $ P.length list
