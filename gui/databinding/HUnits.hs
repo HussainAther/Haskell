@@ -98,3 +98,37 @@ testSeekBy = do (_, size, bl) <- list
                  --give a more detailed error message than assertPos 
                  assertEqual ("Seek from " ++ show init ++ " by " ++ show offset) expected actual 
                  assertPos expected bl actual
+
+testNext :: Assertion
+testNext = do (_, size, bl) <- list 
+               init <- randomRIO (0, size-2) 
+               seek bl init 
+               B.next bl >>= assertPos (init+1) bl 
+
+testPrev :: Assertion 
+testPrev = do (_, size, bl) <- list 
+               init <- randomRIO (1, size-1) 
+               seek bl init 
+               prev bl >>= assertPos (init-1) bl 
+
+testRemove :: Assertion 
+testRemove = do (list, size, bl) <- list 
+                 pos <- randomRIO (0, size-2) 
+                 seek bl pos 
+                 remove bl >>= assertPos pos bl 
+                 assertList (remove' list pos) bl 
+
+testRemoveLast :: Assertion 
+testRemoveLast = do (list, size, bl) <- list 
+                     seek bl (size-1) 
+                     remove bl >>= assertPos (size-2) bl 
+                     assertList (remove' list (size-1)) bl 
+
+testInsert :: Assertion 
+testInsert = do (list, size, bl) <- list 
+                 pos <- randomRIO (0, size-1) 
+                 new <- randomIO 
+                 seek bl pos 
+                 let pos' = pos+1 
+                 insert bl new >>= assertPos pos' bl 
+                 assertList (insert' list pos' new) b
