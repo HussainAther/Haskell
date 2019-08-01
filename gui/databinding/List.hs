@@ -65,3 +65,12 @@ seek' (BindingList source list pos) new = do list' <- readVar list
                                              readVar (list' !! new) >>= writeVar source
                                              writeVar pos new
                                              return new
+
+-- | Bind to a new position in a binding list.
+seekBy :: Variable v => (Int -> Int) -> BindingList v a -> IO Int
+seekBy f bindingList = do pos <- readVar (pos bindingList) 
+                          seek bindingList $ f pos
+
+-- | Bind to the next item in a binding list. 
+next :: Variable v => BindingList v a -> IO Int 
+next = seekBy succ
