@@ -12,3 +12,9 @@ student = Student anonymous anonymous 0
 $(derive [''Name, ''Student])
 instance WxGen Name
 instance WxGen Student
+
+main = start $ do
+    window <- frame [text := "WxGeneric"]
+    editor <- genericWidget window student
+    set window [layout := widget editor]
+    return windo
