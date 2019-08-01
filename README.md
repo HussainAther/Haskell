@@ -1,3 +1,3 @@
 # Haskell
 
-Anything that can be computed in Haskell.
+Anything that can be created in Haskell.
