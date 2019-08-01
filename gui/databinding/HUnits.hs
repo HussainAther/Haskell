@@ -73,3 +73,18 @@ assertPos :: Int -> BindingList V A -> Int -> Assertion
 assertPos expected bl reported = do pos <- position bl 
                                     assertEqual "Wrong positon" expected pos 
                                     assertEqual "Wrong positon reported" pos reported
+
+testList :: Assertion 
+testList = do (expected, _, bl) <- list 
+              assertList expected bl 
+
+testLength :: Assertion 
+testLength = do (_, expected, bl) <- list 
+                 B.length bl >>= (expected @=?) 
+
+testSeek :: Assertion 
+testSeek = do (list, size, bl) <- list 
+              pos <- randomRIO (0,size-1) 
+              seek bl pos >>= assertPos pos bl 
+              actual <- readVar bl 
+              list !! pos @=? actual
