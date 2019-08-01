@@ -26,4 +26,13 @@ main = start $ do
             moves :: Event (State -> State)
             moves = fold1 union $ zipWith (\e s -> play s <$ e) events [(x, y) | y <- [1..3], x <- [1..3]]
                     where play squrae (game, _) = move game square
-               
+            state :: Discrete State
+            state = accumD (newGame, Nothing) moves
+            player :: Discrete String
+            player = (\(Game player _, _) -> show player) <$> state
+            tokens :: [Discrete String]
+            tokens = map (\e -> stepperD "" (player <@ e)) events
+         --wire up the widget event handlers
+         zipWithM_ (\b e -> sink b [text :== e, enabled :== null <#> e])
+                   (map objectCast btns ++ map objectCast radios ++ map objectCast checks :: [Control ()])
+                   tokens
