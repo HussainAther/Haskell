@@ -34,4 +34,13 @@ testRemoveLast' :: Assertion
 testRemoveLast' = do (list, size) <- list'
                      let actual = remove' list (size-1)
                      assertEqual "List hasn't shrunk correctly" (size-1) (P.length actual) 
-                     assertEqual "List is incorrect" (take (size-1) list) actual 
+                     assertEqual "List is incorrect" (take (size-1) list) actual
+
+testInsert' :: Assertion
+testInsert' = do (list, size) <- list'
+                  pos <- randomRIO (0, size-1)
+                  let actual = insert' list pos new
+                  assertEqual "List hasn't shrunk correctly" (size+1) (P.length actual) 
+                  assertEqual "Head of list incorrect" (take pos list) (take pos actual)
+                  assertEqual "element not inserted" new (actual !! pos) 
+                  assertEqual "Tail of list incorrect" (drop pos list) (drop (pos+1) actual)
