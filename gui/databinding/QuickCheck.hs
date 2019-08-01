@@ -109,3 +109,27 @@ prop_next (List xs) i = let pos = notLast i xs in monadicIO $ do
     (new, x) <- run $ do bl <- list xs pos 
                          liftM2 (,) (B.next bl) (readVar bl) 
     assert (new == pos + 1 && x == xs !! new)
+
+prop_prev :: List -> Int -> Property 
+prop_prev (List xs) i = let pos = anywhere i xs + 1 in monadicIO $ do 
+   (new, x) <- run $ do bl <- list xs pos 
+                        liftM2 (,) (prev bl) (readVar bl) 
+   assert (new == pos - 1 && x == xs !! new) 
+
+prop_insert :: List -> Int -> A -> Property 
+prop_insert (List xs) i x = let pos = anywhere i xs 
+                                new = pos + 1 
+                            in monadicIO $ do 
+    (pos', ys) <- run $ do bl <- list xs pos 
+                           liftM2 (,) (insert bl x) (fromBindingList bl) 
+    assert (ys == insert' xs new x && pos' == new) 
+
+-- we test removing the last element separately because it's a special case 
+testRemove :: [A] -> Int -> PropertyM IO (Int, [A]) 
+testRemove xs pos = run $ do bl <- list xs pos 
+                             liftM2 (,) (remove bl) (fromBindingList bl) 
+
+prop_remove :: List -> Int -> Property 
+prop_remove (List xs) i = let pos = notLast i xs in monadicIO $ do 
+    (pos', ys) <- testRemove xs pos 
+    assert (ys == remove' xs pos && pos' == pos)
