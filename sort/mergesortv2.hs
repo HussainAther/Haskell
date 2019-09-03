@@ -8,4 +8,5 @@ mSort xs
 mer (x:xs) (y:ys)
   | (x<=y)      = x : mer xs (y:ys)
   | otherwise   = y : mer (x:xs) ys
-
+mer (x:xs) []   = (x:xs)
+mer []     ys   = ys
