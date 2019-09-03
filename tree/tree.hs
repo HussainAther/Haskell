@@ -13,3 +13,7 @@ module Tree
 data Tree a = Nil | Node a (Tree a) (Tree a)
 nil :: Tree a
 nil = Nil
+
+isNil :: Tree a -> Bool
+isNil Nil = True
+isNil _   = False
