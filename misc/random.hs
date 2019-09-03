@@ -12,3 +12,7 @@ modulus    = 2468
 scaleSequence :: Int -> Int -> [Int] -> [Int]
 scaleSequence s t
   = map scale
+    where
+    scale n = n 'div' denom + s
+    range   = t-s+1
+    denom   = modulus 'div' range
