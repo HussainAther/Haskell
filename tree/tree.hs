@@ -17,3 +17,7 @@ nil = Nil
 isNil :: Tree a -> Bool
 isNil Nil = True
 isNil _   = False
+
+isNode :: Tree a -> Bool
+isNode Nil = False
+isNode _   = True
