@@ -8,3 +8,5 @@ module Tree
    treeVal,   -- Tree a -> a
    insTree,   -- Ord a => a -> Tree a -> Tree a
    delete,    -- Ord a => a -> Tree a -> Tree a
+   minTree,   -- Ord a => Tree a -> Maybe a
+  ) where
