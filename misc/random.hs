@@ -8,3 +8,7 @@ seed       = 1234
 multiplier = 5678
 increment  = 1357
 modulus    = 2468
+
+scaleSequence :: Int -> Int -> [Int] -> [Int]
+scaleSequence s t
+  = map scale
