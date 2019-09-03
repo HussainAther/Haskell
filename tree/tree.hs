@@ -10,3 +10,6 @@ module Tree
    delete,    -- Ord a => a -> Tree a -> Tree a
    minTree,   -- Ord a => Tree a -> Maybe a
   ) where
+data Tree a = Nil | Node a (Tree a) (Tree a)
+nil :: Tree a
+nil = Nil
