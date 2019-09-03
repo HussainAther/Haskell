@@ -25,3 +25,11 @@ isNode _   = True
 leftSub :: Tree a -> Tree a
 leftSub Nil            = error "leftSub"
 leftSub (Node _ t1 _)  = t1
+
+rightSub :: Tree a -> Tree a
+rightSub Nil            = error "rightSub"
+rightSub (Node _ _ t2)  = t2
+
+treeVal :: Tree a -> a
+treeVal Nil           = error "treeVal"
+treeVal (Node v _ _)  = v
