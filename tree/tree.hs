@@ -21,3 +21,7 @@ isNil _   = False
 isNode :: Tree a -> Bool
 isNode Nil = False
 isNode _   = True
+
+leftSub :: Tree a -> Tree a
+leftSub Nil            = error "leftSub"
+leftSub (Node _ t1 _)  = t1
