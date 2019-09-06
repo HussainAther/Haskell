@@ -23,3 +23,7 @@ main = do
                thickCircle 30 10
          , Color yellow $ translate 200 100 $
                circleSolid 30
+         , Color chartreuse $ translate (-200) (-100) $
+               thickArc 0 180 30 30
+         , Color (dark magenta) $ translate (-100) (-100) $
+               arcSolid 0 90 30
