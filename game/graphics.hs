@@ -7,3 +7,6 @@ main = do
    let width  = 640
        height = 480
    withWindow width height "Resurrection" $ \win -> do
+
+  renderFrame window glossState = do
+
