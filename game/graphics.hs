@@ -9,4 +9,4 @@ main = do
    withWindow width height "Resurrection" $ \win -> do
 
   renderFrame window glossState = do
-
+     displayPicture (width, height) white glossState 1.0 $
