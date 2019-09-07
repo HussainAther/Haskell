@@ -8,3 +8,4 @@ data Command = Eval Expr | Assign Var Expr | Null
 commLine :: String -> Command
 commLine "(3+x)"   = (Eval (Op Add (Lit 3) ( Var 'x')))
 commLine "x:(3+x)" = (Assign 'x' (Op Add (Lit 3) (Var 'x')))
+commLine ""        = Null
