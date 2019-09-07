@@ -4,3 +4,5 @@ type Var  = Char
 initial :: Store
 value   :: Store -> Var -> Int
 update  :: Store -> Var -> Int -> Store
+data Command = Eval Expr | Assign Var Expr | Null
+commLine :: String -> Command
