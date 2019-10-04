@@ -13,3 +13,6 @@ token t = spot (==t)
 
 spot :: (a -> Bool) -> Parse a a
 spot p (x:xs)
+  | p x          = [(x, xs)]
+  | otherwise    = [] 
+spot p []        = []
