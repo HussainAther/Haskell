@@ -5,3 +5,5 @@ copyInputToOutput : : I0 ( ) copyInputToOutput
     return (not res))
   (do line <- getLine 
     putStrLn line)
+
+goUntilEmpty :: IO ()
