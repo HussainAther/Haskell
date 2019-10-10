@@ -7,3 +7,5 @@ copyInputToOutput : : I0 ( ) copyInputToOutput
     putStrLn line)
 
 goUntilEmpty :: IO ()
+goUntilEmpty 
+  = do line <- getLine
