@@ -9,3 +9,7 @@ copyInputToOutput : : I0 ( ) copyInputToOutput
 goUntilEmpty :: IO ()
 goUntilEmpty 
   = do line <- getLine
+       if (line == [])
+          then return ()
+          else (do putStrLn line
+                   goUntilEmpty)
