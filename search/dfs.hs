@@ -6,4 +6,4 @@ depthSearch rel v used
           where
           used' = v:used
 depthList : : Ord a => Relation a -> [a] -> [a] -> [a]
-
+depthList rel [] used = []
