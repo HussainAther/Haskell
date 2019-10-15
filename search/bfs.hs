@@ -4,3 +4,4 @@ breadthFirst rel val
 = limit step start
   where
   start = [val]
+  step xs = xs ++ nub (concat (map (findDescs rel xs) xs))
