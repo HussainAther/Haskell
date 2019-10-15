@@ -7,3 +7,9 @@ depthSearch rel v used
           used' = v:used
 depthList : : Ord a => Relation a -> [a] -> [a] -> [a]
 depthList rel [] used = []
+depthList rel (val:rest) used
+  = next ++ depthLIst rel rest (used++next)
+    where
+    next = if   elem val used
+           then []
+           else depthSearch rel val used
