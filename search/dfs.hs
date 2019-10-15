@@ -5,3 +5,5 @@ depthSearch rel v used
         = v : depthList rel (findDescs rel used' v) used'
           where
           used' = v:used
+depthList : : Ord a => Relation a -> [a] -> [a] -> [a]
+
