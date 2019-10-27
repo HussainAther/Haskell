@@ -10,3 +10,8 @@ sumTree (Node n tl t2)
   = do num <- return n
        s1 <- sumTreeti
        s2 <- sumTreet2 return (num + s1 + s2)
+data Id a = Id a
+instance Monad Id where 
+  return = Id
+  (>>=) (Id x) f = f x
+sumTree :: Tree Int -> Id Int
