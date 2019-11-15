@@ -37,4 +37,11 @@ treeVal (Node v _ _)  = v
 sTree :: Tree Int -> Int
 sTree Nil            = 0
 sTree (Node n t1 t2) = n + sTree t1 + sTree t2
+
 sumTree :: Tree Int -> St Int
+sumTree Nil = return 0
+sumTree (Node n t1 t2)
+  = do num <- return n
+       s1  <- sumTree t1
+       s2  <- sumTree t2
+       return (num + s1 + s2)
