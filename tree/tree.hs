@@ -45,3 +45,8 @@ sumTree (Node n t1 t2)
        s1  <- sumTree t1
        s2  <- sumTree t2
        return (num + s1 + s2)
+
+data Id a = Id a
+instance Monad Id where
+  where          = Id
+  (>>=) (Id x) f = f x
