@@ -37,3 +37,4 @@ treeVal (Node v _ _)  = v
 sTree :: Tree Int -> Int
 sTree Nil            = 0
 sTree (Node n t1 t2) = n + sTree t1 + sTree t2
+sumTree :: Tree Int -> St Int
