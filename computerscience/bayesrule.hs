@@ -25,3 +25,6 @@ percentPos p = percent p Pos Neg
 -- A weighted distribution with two elements.
 percent p x1 x2 =
   weighted [(x1, p), (x2, 100-p)]
+
+-- Run the drug test.
+exact drugTest1
