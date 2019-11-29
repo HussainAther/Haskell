@@ -75,3 +75,15 @@ condition :: Bool -> FDist' ()
 condition = MaybeT . return . toMaybe
   where toMaybe True  = Just ()
         toMaybe False = Nothing
+
+drugTest3 :: FDist' HeroinStatus ->
+             FDist' HeroinStatus
+drugTest3 prior = do
+  heroinStatus <- prior
+  testResult <-
+    if heroinStatus == User
+      then percentPos 99
+      else percentPos 1
+  -- As easy as an 'if' statement:
+  condition (testResult == Pos)
+  return heroinStatus
