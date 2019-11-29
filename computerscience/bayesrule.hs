@@ -87,3 +87,5 @@ drugTest3 prior = do
   -- As easy as an 'if' statement:
   condition (testResult == Pos)
   return heroinStatus
+
+bayes (drugTest3 (percentUser 50))
