@@ -36,3 +36,8 @@ drugTest2 = do
   return (if testResult == Pos
             then Just heroinStatus
             else Nothing)
+
+exact drugTest2
+
+value (Perhaps x _) = x
+prob (Perhaps _ p) = p
