@@ -28,3 +28,11 @@ percent p x1 x2 =
 
 -- Run the drug test.
 exact drugTest1
+
+-- Ignore negative test results.
+drugTest2 :: Dist d => d (Maybe HeroinStatus)
+drugTest2 = do
+  (heroinStatus, testResult) <- drugTest1
+  return (if testResult == Pos
+            then Just heroinStatus
+            else Nothing)
