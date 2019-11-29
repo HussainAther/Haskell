@@ -7,4 +7,14 @@ data Test = Pos | Neg
 
 data HeroinStatus = User | Clean
   deriving (Show, Eq)
-Assuming that 0.1% of our emplo
+--If .1% of employees have recently used heroin and the test
+--is 99% accurate, we can model the test.
+drugTest1 :: Dist d => d (HeroinStatus, Test)
+drugTest1 = do
+  heroinStatus <- percentUser 0.1
+  testResult <-
+    if heroinStatus == User
+      then percentPos 99
+      else percentPos 1
+  return (heroinStatus, testResult)
+
