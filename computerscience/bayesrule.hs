@@ -67,3 +67,11 @@ instance Functor FDist' where
 
 instance Dist FDist' where
   weighted xws = lift (weighted xws)
+
+bayes :: FDist' a -> [Perhaps a]
+bayes = exact . onlyJust . runMaybeT
+
+condition :: Bool -> FDist' ()
+condition = MaybeT . return . toMaybe
+  where toMaybe True  = Just ()
+        toMaybe False = Nothing
