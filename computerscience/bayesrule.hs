@@ -41,3 +41,10 @@ exact drugTest2
 
 value (Perhaps x _) = x
 prob (Perhaps _ p) = p
+
+catMaybes' :: [Perhaps (Maybe a)] -> [Perhaps a]
+catMaybes' [] = []
+catMaybes' (Perhaps Nothing _ : xs) =
+  catMaybes' xs
+catMaybes' (Perhaps (Just x) p : xs) =
+  Perhaps x p : catMaybes' xs
