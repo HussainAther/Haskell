@@ -48,3 +48,12 @@ catMaybes' (Perhaps Nothing _ : xs) =
   catMaybes' xs
 catMaybes' (Perhaps (Just x) p : xs) =
   Perhaps x p : catMaybes' xs
+
+onlyJust :: FDist (Maybe a) -> FDist a
+onlyJust dist
+    | total > 0 = PerhapsT (map adjust filtered)
+    | otherwise = PerhapsT []
+  where filtered = catMaybes' (runPerhapsT dist)
+        total = sum (map prob filtered)
+        adjust (Perhaps x p) =
+          Perhaps x (p / total)
