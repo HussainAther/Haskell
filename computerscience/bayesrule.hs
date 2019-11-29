@@ -57,3 +57,13 @@ onlyJust dist
         total = sum (map prob filtered)
         adjust (Perhaps x p) =
           Perhaps x (p / total)
+
+type FDist' = MaybeT FDist
+
+-- Monads are Functors, no matter what
+-- Haskell thinks.
+instance Functor FDist' where
+  fmap = liftM
+
+instance Dist FDist' where
+  weighted xws = lift (weighted xws)
