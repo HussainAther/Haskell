@@ -1,1 +1,3 @@
-- Feigenbaum constants
+import Data.List (mapAccumL)
+
+-- Feigenbaum constants
