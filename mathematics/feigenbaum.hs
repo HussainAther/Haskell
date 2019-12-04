@@ -15,3 +15,12 @@ feigenbaumApprox mx = snd $ mitch mx 10
                         let (x, y) =
                               iterate
                                 (\(x, y) -> (a - (x * x), 1.0 - ((2.0 * x) * y)))
+                                (0.0, 0.0) !!
+                              (2 ^ i)
+                        in a - (x / y))
+                    (a1 + (a1 - a2) / d1) !!
+                  mxj
+                d = (a1 - a2) / (a - a1)
+            in ((a, a1, d), d))
+        (1.0, 0.0, 3.2)
+        [2 .. (1 + mx)]
