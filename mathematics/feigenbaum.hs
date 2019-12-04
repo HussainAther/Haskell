@@ -24,3 +24,13 @@ feigenbaumApprox mx = snd $ mitch mx 10
             in ((a, a1, d), d))
         (1.0, 0.0, 3.2)
         [2 .. (1 + mx)]
+
+main :: IO ()
+main =
+  (putStrLn . unlines) $
+  zipWith
+    (\i s -> justifyRight 2 ' ' (show i) ++ '\t' : s)
+    [1 ..]
+    (show <$> feigenbaumApprox 13)
+  where
+    justifyRight n c s = drop (length s) (replicate n c ++ s)
